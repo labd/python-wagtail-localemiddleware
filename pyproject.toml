@@ -1,0 +1,73 @@
+[project]
+name = "labdigital-wagtail-localemiddleware"
+version = "0.0.1"
+description = ""
+authors = [
+    {name = "Lab Digital BV", email = "info@labdigital.nl"},
+]
+dependencies = [
+    "wagtail",
+    "pytest-cov",
+]
+requires-python = ">=3.10"
+readme = "README.md"
+license = {text = "Proprietary"}
+classifiers = [
+    "License :: Other/Proprietary License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[project.urls]
+Homepage = "https://github.com/labd/wagtail-localemiddleware"
+
+[project.optional-dependencies]
+test = [
+    "coverage",
+    "factory-boy",
+    "isort",
+    "pytest-django",
+    "pytest>=7.4",
+    "requests-mock",
+    "ruff",
+    "black",
+    "django-stubs",
+    "mypy",
+    "wagtail-factories>=4.2.1",
+]
+
+[build-system]                                                                  
+requires = ["setuptools>=61", "wheel"]                                          
+build-backend = "setuptools.build_meta"   
+
+[tool.black]
+target-version = ["py310"]
+
+[tool.isort]
+profile='black'
+
+[tool.pdm]
+
+[tool.pdm.build]
+includes = ["src"]
+package-dir = "src"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--color=yes --reuse-db --nomigrations --disable-warnings"
+
+[tool.coverage.run]
+branch = true
+source = [
+ 	"labd.middleware.locale"
+]
+
+[tool.coverage.html]
+directory = "reports/covhtml"
+
+[tool.coverage.xml]
+output = "reports/coverage.xml"

@@ -1,0 +1,2 @@
+import factory
+import wagtail_factories
