@@ -2,6 +2,13 @@ from django.conf import settings
 
 pytest_plugins = "tests.fixtures"
 
+WAGTAIL_CONTENT_LANGUAGES = LANGUAGES = [
+    ("en", "English"),
+    ("de", "German"),
+    ("fr", "French"),
+    ("es", "Spanish"),
+]
+
 
 def pytest_configure():
     settings.configure(
@@ -9,15 +16,19 @@ def pytest_configure():
         MIDDLEWARE=[
             "django.middleware.security.SecurityMiddleware",
             "django.contrib.sessions.middleware.SessionMiddleware",
+            "labd.middleware.locale.LocaleMiddleware",
             "django.middleware.common.CommonMiddleware",
             "django.middleware.csrf.CsrfViewMiddleware",
             "django.contrib.auth.middleware.AuthenticationMiddleware",
             "django.contrib.messages.middleware.MessageMiddleware",
             "django.middleware.clickjacking.XFrameOptionsMiddleware",
-            "labd.middleware.locale.LocaleMiddleware",
-            "wagtail.core.middleware.SiteMiddleware",
         ],
         STATIC_URL="/static/",
+        USE_I18N=True,
+        WAGTAIL_I18N_ENABLED=True,
+        LANGUAGE_CODE="en",
+        WAGTAIL_CONTENT_LANGUAGES=WAGTAIL_CONTENT_LANGUAGES,
+        LANGUAGES=LANGUAGES,
         INSTALLED_APPS=[
             "wagtail.contrib.forms",
             "wagtail.contrib.redirects",
