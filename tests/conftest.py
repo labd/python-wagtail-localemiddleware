@@ -72,5 +72,7 @@ def pytest_configure():
                 "LOCATION": "unique-snowflake",
             }
         },
-        DATABASES={"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": "db.sqlite"}},
+        DATABASES={
+            "default": {"ENGINE": "django.db.backends.sqlite3", "NAME": "db.sqlite"}
+        },
     )

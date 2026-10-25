@@ -1,9 +1,10 @@
 from typing import Optional
+
 from django.conf import settings
-from django.urls import is_valid_path, get_script_prefix
-from django.utils import translation
 from django.http import HttpRequest, HttpResponseBase
 from django.middleware.locale import LocaleMiddleware as _LocaleMiddleware
+from django.urls import get_script_prefix, is_valid_path
+from django.utils import translation
 from django.utils.cache import patch_vary_headers
 
 
@@ -16,7 +17,9 @@ class LocaleMiddleware(_LocaleMiddleware):
             return
         super().process_request(request)
 
-    def process_response(self, request: HttpRequest, response: HttpResponseBase) -> HttpResponseBase:
+    def process_response(
+        self, request: HttpRequest, response: HttpResponseBase
+    ) -> HttpResponseBase:
         language = translation.get_language()
         if response.status_code == 404:
             if redirect := self.redirect(request, language):
@@ -42,7 +45,9 @@ class LocaleMiddleware(_LocaleMiddleware):
         return True
 
     def language_url(self, request: HttpRequest, language: str) -> str:
-        if language == settings.LANGUAGE_CODE or self.language_from_path(request.path_info):
+        if language == settings.LANGUAGE_CODE or self.language_from_path(
+            request.path_info
+        ):
             return request.path
 
         # Maybe the language code is missing in the URL? Try adding the language
@@ -63,7 +68,9 @@ class LocaleMiddleware(_LocaleMiddleware):
             )
         return request.path
 
-    def redirect(self, request: HttpRequest, language: str) -> Optional[HttpResponseBase]:
+    def redirect(
+        self, request: HttpRequest, language: str
+    ) -> Optional[HttpResponseBase]:
         url = self.language_url(request, language)
         if url == request.path:
             return None
@@ -71,7 +78,3 @@ class LocaleMiddleware(_LocaleMiddleware):
         redirect = self.response_redirect_class(url)
         patch_vary_headers(redirect, ("Accept-Language",))
         return redirect
-
-
-
-
