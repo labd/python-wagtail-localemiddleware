@@ -40,8 +40,13 @@ class LocaleMiddleware(_LocaleMiddleware):
 
     def validate(self, request: HttpRequest, language: str):
         path = self.language_path(request, language)
-        if not is_valid_path(path, getattr(request, "urlconf", settings.ROOT_URLCONF)):
-            return False
+        # Resolve with the candidate language active, otherwise i18n_patterns
+        # match against whatever language happens to be active on this thread.
+        with translation.override(language):
+            if not is_valid_path(
+                path, getattr(request, "urlconf", settings.ROOT_URLCONF)
+            ):
+                return False
         return True
 
     def language_url(self, request: HttpRequest, language: str) -> str:
