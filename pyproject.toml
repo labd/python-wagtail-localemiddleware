@@ -29,12 +29,10 @@ Homepage = "https://github.com/labd/wagtail-localemiddleware"
 test = [
     "coverage",
     "factory-boy",
-    "isort",
     "pytest-django",
     "pytest>=7.4",
     "requests-mock",
     "ruff",
-    "black",
     "django-stubs",
     "mypy",
     "wagtail-factories>=4.2.1",
@@ -44,11 +42,11 @@ test = [
 requires = ["setuptools>=61", "wheel"]                                          
 build-backend = "setuptools.build_meta"   
 
-[tool.black]
-target-version = ["py310"]
+[tool.ruff]
+line-length = 88
 
-[tool.isort]
-profile='black'
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
 
 [tool.pdm]
 
