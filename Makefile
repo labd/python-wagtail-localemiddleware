@@ -1,25 +1,25 @@
 
 install:
-	pip install -e .[test]
+	uv sync
 
 test:
-	py.test
+	uv run pytest
 
 retest:
-	py.test -vvv --lf
+	uv run pytest -vvv --lf
 
 coverage:
-	py.test --cov=labd.localemiddleware --cov-report=term-missing --cov-report=html
+	uv run pytest --cov=labd.middleware.locale --cov-report=term-missing --cov-report=html
 
 format:
-	ruff format src tests
-	ruff check --fix src tests
+	uv run ruff format src tests
+	uv run ruff check --fix src tests
 
 lint:
-	ruff format --check src tests
-	ruff check src tests
+	uv run ruff format --check src tests
+	uv run ruff check src tests
 
 release:
 	rm -rf dist/*
-	python setup.py sdist bdist_wheel
-	twine upload dist/*
+	uv build
+	uv publish

@@ -7,10 +7,9 @@ authors = [
 ]
 dependencies = [
     "wagtail",
-    "pytest-cov",
 ]
 requires-python = ">=3.11"
-readme = "README.md"
+readme = "README.rst"
 license = {text = "Proprietary"}
 classifiers = [
     "License :: Other/Proprietary License",
@@ -25,34 +24,34 @@ classifiers = [
 [project.urls]
 Homepage = "https://github.com/labd/wagtail-localemiddleware"
 
-[project.optional-dependencies]
-test = [
+[dependency-groups]
+dev = [
     "coverage",
+    "django-stubs",
     "factory-boy",
+    "mypy",
+    "pytest-cov",
     "pytest-django",
     "pytest>=7.4",
     "requests-mock",
     "ruff",
-    "django-stubs",
-    "mypy",
+    "tox>=4.26",
+    "tox-uv>=1.28",
     "wagtail-factories>=4.2.1",
 ]
 
-[build-system]                                                                  
-requires = ["setuptools>=61", "wheel"]                                          
-build-backend = "setuptools.build_meta"   
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.ruff]
 line-length = 88
 
 [tool.ruff.lint]
 select = ["E4", "E7", "E9", "F", "I"]
-
-[tool.pdm]
-
-[tool.pdm.build]
-includes = ["src"]
-package-dir = "src"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
